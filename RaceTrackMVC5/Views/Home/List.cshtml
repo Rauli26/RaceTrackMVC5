@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "List of Vehicles";
+}
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<div class="container">
+    <div class="row">
+        <div class="table-responsive col-md-12">
+            <table id="tblVehicle" class="table table-bordered table-striped table-responsive table-hover">
+                <thead title="Vehicle">
+                    <tr>
+                        @*<th align="left" class="productth">Id</th>*@
+                        <th align="left" class="vehicleth">Select</th>
+                        <th align="left" class="vehicleth">Vehicle Name</th>
+                        <th align="left" class="vehicleth">Vehicle Type</th>
+                        <th align="left" class="vehicleth">Lift</th>
+                        <th align="left" class="vehicleth">Tire Wear</th>
+                        <th align="left" class="vehicleth">Has tow strap</th>
+                        <th align="left" class="vehicleth">Add to Track</th>
+                        <th align="left" class="vehicleth">Remove from Track</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var vehicle in Model)
+                    {
+                        <tr>
+                            <td><input type="checkbox" name="ids" value="@vehicle.Id" /></td>
+                            <td>@vehicle.Name</td>
+                            <td>@vehicle.Type</td>
+                            <td>@vehicle.Lift</td>
+                            <td>@vehicle.TireWear</td>
+                            <td>@vehicle.HasTowStrap</td>
+                            <td><a href="#" class="btn btn-primary m-1">Add to Track</a></td>
+                            <td><a href="#" class="btn btn-danger m-1">Delete from Track</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <input type="submit" class="btn btn-primary m-1" value="Add to track" />
+        </div>
+
+        @*<script>
+            $(function () {
+                $.get("List", {}, function(data))
+            })
+        </script>*@
+
+        @*<div class="table-responsive col-md-6">
+            <table id="tblTrack" class="table table-bordered table-striped table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <th align="left" class="productth">Id</th>
+                        <th align="left" class="productth">Vehicle Name</th>
+                        <th align="left" class="productth">Track Name</th>
+                        <th align="left" class="productth">Remove from Track</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>*@
+    </div>
+</div>
+

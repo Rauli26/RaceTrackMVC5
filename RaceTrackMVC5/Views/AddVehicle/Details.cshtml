@@ -1,0 +1,58 @@
+﻿@model RaceTrackMVC5.ViewModel.AddVehicleViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AddVehicleViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.VehicleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VehicleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VehicleType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VehicleType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AcceptableTireWear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AcceptableTireWear)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AcceptableLift)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AcceptableLift)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HasTowStrap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HasTowStrap)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.VehicleId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

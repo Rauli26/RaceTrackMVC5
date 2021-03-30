@@ -1,0 +1,70 @@
+﻿@model RaceTrackMVC5.ViewModel.IndexViewModel
+@*@model IEnumerable<RaceTrackMVC5.ViewModel.IndexViewModel>*@
+@*@model List<RaceTrackMVC5.ViewModel.AddVehicleViewModel>*@
+@*@model IEnumerable<RaceTrackMVC5.Models.Vehicles>*@
+@*@model IEnumerable<RaceTrackMVC5.Models.Composition.CarInspection>
+    @model IEnumerable<RaceTrackMVC5.Models.Composition.TruckInspection>*@
+@*@using RaceTrackMVC5.ViewModel;*@
+@*@model IndexViewModel;*@
+
+
+
+@{
+    ViewBag.Title = "List Vehicles";
+}
+
+<h2>Index</h2>
+
+
+<p>
+    @Html.ActionLink("Add New Vehicle", "Create")
+</p>
+
+
+<div class="container">
+    <div class="row">
+        <div class="table-responsive col-md-6">
+            <table id="tblVehicle" class="table table-bordered table-striped table-responsive table-hover">
+                <thead title="Vehicle">
+                    <tr>
+                        <th align="left" class="productth" hidden>Id</th>
+                        <th align="left" class="productth">Vehicle Name</th>
+                        <th align="left" class="productth">Vehicle Type</th>
+                        <th align="left" class="productth">Add to Track</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    @foreach (var vehicles in Model.Vehicles)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => vehicles.VehicleName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => vehicles.VehicleType)
+                        </td>
+                        <td><a href="#" class="btn btn-primary m-1">Add to Track</a></td>
+                    </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive col-md-6">
+            <table id="tblTrack" class="table table-bordered table-striped table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <th align="left" class="productth" hidden>Id</th>
+                        <th align="left" class="productth">Vehicle Name</th>
+                        <th align="left" class="productth">Track Name</th>
+                        <th align="left" class="productth">Remove from Track</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,337 @@
+﻿@model RaceTrackMVC5.ViewModel.AddVehicleViewModel
+
+
+@{
+    ViewBag.Title = "Add Vehicle";
+}
+
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Vehicle</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.VehicleName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.VehicleName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.VehicleName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.VehicleType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*<select id="vehicletype" onchange="vehicletype">*@
+            @Html.DropDownList("Type", EnumHelper.GetSelectList(typeof(RaceTrackMVC5.Models.VehicleType)), "select vehicle type", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.VehicleType, new { htmlAttributes = new { @class = "form-control" } })
+            @* </select> *@
+            @Html.ValidationMessageFor(model => model.VehicleType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @*<input type="text" id="textvalue" />*@
+    @*<div id="vehicleTypeText" hidden>
+        @Html.EditorFor(model => model.VehicleType, new { htmlAttributes = new { @class = "form-control" } })
+    </div>*@
+
+    <div class="form-group" id="lift" hidden>
+        @Html.LabelFor(model => model.AcceptableLift, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.AcceptableLift, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AcceptableLift, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="tirewear" hidden>
+        @Html.LabelFor(model => model.AcceptableTireWear, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.AcceptableTireWear, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AcceptableTireWear, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.HasTowStrap, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.HasTowStrap)
+                @Html.ValidationMessageFor(model => model.HasTowStrap, "", new { @class = "text-danger" })
+                @Html.Hidden(nameof(Model.IsTrue), "true")
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>}
+<div class="container">
+    <div class="row">
+        <div class="table-responsive col-md-6">
+            <table id="tblVehicle" class="table table-bordered table-striped table-responsive table-hover">
+                <thead title="Vehicle">
+                    <tr>
+                        <th align="left" class="productth">Id</th>
+                        <th align="left" class="productth">Vehicle Name</th>
+                        <th align="left" class="productth">Vehicle Type</th>
+                        <th align="left" class="productth">Add to Track</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive col-md-6">
+            <table id="tblTrack" class="table table-bordered table-striped table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <th align="left" class="productth">Id</th>
+                        <th align="left" class="productth">Vehicle Name</th>
+                        <th align="left" class="productth">Track Name</th>
+                        <th align="left" class="productth">Remove from Track</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+
+        //function vehicletype() {
+        //    var d = document.getElementById("vehicletype");
+        //    var displaytext = d.options[d.selectedIndex].text;
+        //    document.getElementById("textvalue").value = displaytext;
+        //}
+
+        $(function () {
+            $('#Type').on('change', function () {
+                var val = this.value;
+
+                if (val === "0") {
+                    // Show text box
+                    $('#lift').hide();
+                    $('#tirewear').show();
+                } else {
+                    $('#lift').show();
+                    $('#tirewear').hide();
+                }
+            });
+        });
+
+
+
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+    @*//window.onload = function () {
+        //    LoadData();
+        //    LoadTrackData();
+        //    };*@
+
+
+
+
+
+    @*function LoadData() {
+              $("#tblVehicle tbody tr").remove();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("getvehicles")',
+                dataType: 'json',
+                success: function (data) {
+                    $.each(data.data, function (i, item) {
+                        var rows = "<tr>"
+                            + "<td class='prtoducttd'>" + item.Id + "</td>"
+                            + "<td class='prtoducttd'>" + item.Name + "</td>"
+                            + "<td class='prtoducttd'>" + item.Type+ "</td>"
+                            + "<td class='btn-block'> <a class='btn btn-success text-white' href='/racetrack/index' onClick=AddtoTrack("+ item.Id +")> Add To Track</button> </td>"
+                        + "</tr>";
+                        $('#tblVehicle tbody').append(rows);
+                    });
+                },
+                error: function (ex) {
+                    //var r = jQuery.parseJSON(response.responseText);
+                    //alert("Message: " + r.Message);
+                    //alert("StackTrace: " + r.StackTrace);
+                    //alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            return false;
+        }
+
+        function LoadTrackData() {
+             $("#tblTrack tbody tr").remove();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetVehicleOnTrack")',
+                dataType: 'json',
+                success: function (data) {
+                    var items = '';
+                    $.each(data.data, function (i, item) {
+                        var rows = "<tr>"
+                            + "<td class='prtoducttd'>" + item.vehicleId + "</td>"
+                            + "<td class='prtoducttd'>" + item.vehicleName + "</td>"
+                            + "<td class='prtoducttd'>" + item.trackName + "</td>"
+                            + "<td class='btn-block'> <a class='btn btn-danger text-white' href='/racetrack/index' onClick=RemoveFromTrack(" + item.vehicleId + ")> Remove From Track</button> </td>"
+                        + "</tr>";
+                        $('#tblTrack tbody').append(rows);
+                    });
+                },
+                error: function (ex) {
+                    //var r = jQuery.parseJSON(response.responseText);
+                    //alert("Message: " + r.Message);
+                    //alert("StackTrace: " + r.StackTrace);
+                    //alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            return false;
+        }
+
+        function AddtoTrack(vehicleId) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AddToTrack")',
+                data: { VehicleId: vehicleId },
+                dataType: 'json',
+                success: function (data) {
+                    alert(data.message);
+                },
+                error: function (ex) {
+                    console.log(vehicleId);
+                    //var r = jQuery.parseJSON(response.responseText);
+                    //alert("Message: " + r.Message);
+                    //alert("StackTrace: " + r.StackTrace);
+                    //alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            return false;
+        }
+
+            function RemoveFromTrack(vehicleId) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("RemoveFromTrack")',
+                data: { VehicleId: vehicleId },
+                dataType: 'json',
+                success: function (data) {
+                    //alert(data.message);
+                },
+                error: function (ex) {
+                    console.log(vehicleId);
+                    //var r = jQuery.parseJSON(response.responseText);
+                    //alert("Message: " + r.Message);
+                    //alert("StackTrace: " + r.StackTrace);
+                    //alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            return false;
+        }*@
+
+
+
+}
+
+
+
+
+
+
+
+@*<h2>Create</h2>*@
+
+
+@*@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>AddVehicleViewModel</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.VehicleName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.VehicleName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VehicleName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.VehicleType, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.VehicleType, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VehicleType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AcceptableTireWear, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.AcceptableTireWear, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AcceptableTireWear, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AcceptableLift, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.AcceptableLift, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AcceptableLift, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.HasTowStrap, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.HasTowStrap)
+                        @Html.ValidationMessageFor(model => model.HasTowStrap, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
